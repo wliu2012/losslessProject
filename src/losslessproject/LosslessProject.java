@@ -21,6 +21,77 @@ public class LosslessProject {
             tempPredictorImage[i][0]= tempOriginalImage[i][0]-tempOriginalImage[i-1][0];
         }
     }
+    
+    public static void firstEquation(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-tempOriginalImage[j][i-1];
+            }
+        } 
+    }
+    
+    public static void huffmanCodeConvertor(int[][]tempPredictorImage, String[][] tempHuffmanCode)
+    {       
+        String tempCode="";
+       
+        for(int i=0;i<=15;i++)
+        {
+            for(int j=0;j<=15;j++)
+            {               
+                switch(tempPredictorImage[i][j])
+                {
+                    case 0:
+                        tempCode="1";
+                        break;
+                    case 1:
+                        tempCode="00";
+                        break;
+                    case -1:
+                        tempCode="011";
+                        break;        
+                    case 2:
+                        tempCode="0100";
+                        break;
+                    case -2:
+                        tempCode="01011";
+                        break;
+                    case 3:
+                        tempCode="010100";
+                        break;
+                    case -3:
+                        tempCode="0101011";
+                        break;
+                    case 4:
+                        tempCode="01010100";
+                        break;
+                    case -4:
+                        tempCode="010101011";
+                        break;
+                    case 5:
+                        tempCode="010101010";
+                        break;
+                    case -5:
+                        tempCode="01010101011";
+                        break;
+                    case 6:
+                        tempCode="010101010100";
+                        break;
+                    case -6:
+                        tempCode="0101010101011";
+                        break;
+                    default:
+                        tempCode= Integer.toBinaryString(tempPredictorImage[0][0]);
+                }
+                tempHuffmanCode[i][j]=tempCode;
+            }
+        }
+        
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -46,12 +117,23 @@ public class LosslessProject {
     };
        
         int[][] predictorImage =new int[16][16];
-        int[][] compressedImage =new int[16][16];
+        String[][] compressedImage =new String[16][16];
         int[][] decorderImage =new int[16][16];
         int[][] decompressionImage =new int[16][16];
 
         AandBFunction(originalImage,predictorImage);
+        firstEquation(originalImage,predictorImage);
+        huffmanCodeConvertor(predictorImage, compressedImage);
         
+        for(String[] tempNumber1:compressedImage)
+        {
+            for(String tempNumber2:tempNumber1)
+            {
+                System.out.print(tempNumber2+" ");
+            }
+            System.out.println();
+        }
+
         for(int[] tempNumber1:predictorImage)
         {
             for(int tempNumber2:tempNumber1)
@@ -60,7 +142,6 @@ public class LosslessProject {
             }
             System.out.println();
         }
-
     }
     
    
