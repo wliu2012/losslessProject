@@ -5,13 +5,22 @@
  */
 
 package losslessproject;
-
+import java.lang.System;
 /**
  *
  * @author weijie
  */
 public class LosslessProject {
 
+    public static void AandBFunction(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+        tempPredictorImage[0][0]=tempOriginalImage[0][0];
+        for(int i=1; i<=15;i++)
+        {
+            tempPredictorImage[0][i]= tempOriginalImage[0][i]-tempOriginalImage[0][i-1];
+            tempPredictorImage[i][0]= tempOriginalImage[i][0]-tempOriginalImage[i-1][0];
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -35,6 +44,25 @@ public class LosslessProject {
        {103,105,106,108,106,104,106,105,103,101,101,100,101,103,102,105},
        {102,105,105,105,106,104,106,107,104,103,102,100,101,104,102,104}      
     };
+       
+        int[][] predictorImage =new int[16][16];
+        int[][] compressedImage =new int[16][16];
+        int[][] decorderImage =new int[16][16];
+        int[][] decompressionImage =new int[16][16];
+
+        AandBFunction(originalImage,predictorImage);
+        
+        for(int[] tempNumber1:predictorImage)
+        {
+            for(int tempNumber2:tempNumber1)
+            {
+                System.out.print(tempNumber2+" ");
+            }
+            System.out.println();
+        }
+
     }
+    
+   
     
 }
