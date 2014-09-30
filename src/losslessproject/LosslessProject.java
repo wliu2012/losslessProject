@@ -164,10 +164,6 @@ public class LosslessProject {
         } 
     } 
     
-    
-    
-    
-    
     public static void seventhEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
     {
        for(int j=1; j<=15;j++)
@@ -244,8 +240,7 @@ public class LosslessProject {
                 }
                 tempHuffmanCode[i][j]=tempCode;
             }
-        }
-        
+        }       
     }
     
     public static void huffmanCodeDecoder(int[][]tempDecoderImage, String[][] tempHuffmanCode)
