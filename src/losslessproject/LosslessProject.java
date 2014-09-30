@@ -137,7 +137,7 @@ public class LosslessProject {
         {
             for(int j=1; j<=15;j++)
             {
-                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+(tempDecompressionImage[j][i-1]*2-tempDecompressionImage[j-1][i]*2);
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+(tempDecompressionImage[j][i-1]/2+tempDecompressionImage[j-1][i]/2);
             }
         } 
     } 
