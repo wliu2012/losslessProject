@@ -120,7 +120,27 @@ public class LosslessProject {
         } 
     } 
      
-     
+    public static void fifthEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int j=1; j<=15;j++)
+        {
+            for(int i=1; i<=15;i++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-(tempOriginalImage[j][i-1]/2+tempOriginalImage[j-1][i]/2);
+            }
+        } 
+    }
+    
+    public static void fifthEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+(tempDecompressionImage[j][i-1]*2-tempDecompressionImage[j-1][i]*2);
+            }
+        } 
+    } 
     
     public static void huffmanCodeEncoder(int[][]tempPredictorImage, String[][] tempHuffmanCode)
     {       
@@ -301,6 +321,14 @@ public class LosslessProject {
         AandBDecoder(decompressionImage, decoderImage);
         forthEquationDecoder(decompressionImage, decoderImage);
         
+         //fifth equation
+        AandBEncoder(originalImage,predictorImage);
+        fifthEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        fifthEquationDecoder(decompressionImage, decoderImage);
+        
         
 //        for(String[] tempNumber1:compressedImage)
 //        {
@@ -310,7 +338,10 @@ public class LosslessProject {
 //            }
 //            System.out.println();
 //        }
-//
+//        
+//        System.out.println();
+//         System.out.println();
+        
         for(int[] tempNumber1:decompressionImage)
         {
             for(int tempNumber2:tempNumber1)
