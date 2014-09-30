@@ -325,7 +325,7 @@ public class LosslessProject {
        {103,105,107,107,106,104,106,104,103,101,100,100,101,102,102,103},
        {103,105,106,108,106,104,106,105,103,101,101,100,101,103,102,105},
        {102,105,105,105,106,104,106,107,104,103,102,100,101,104,102,104}      
-    };
+        };
        
         int[][] predictorImage =new int[16][16];
         String[][] compressedImage =new String[16][16];
@@ -408,10 +408,7 @@ public class LosslessProject {
             }
             System.out.println();
         }
-        
-       
+      
     }
-    
-   
     
 }
