@@ -201,6 +201,7 @@ public class LosslessProject {
         int[][] decoderImage =new int[16][16];
         int[][] decompressionImage =new int[16][16];
 
+        //First equation
         AandBEncoder(originalImage,predictorImage);
         firstEquationEncoder(originalImage,predictorImage);
         huffmanCodeEncoder(predictorImage, compressedImage);
