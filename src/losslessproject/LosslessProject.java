@@ -47,12 +47,80 @@ public class LosslessProject {
     {
        for(int i=1; i<=15;i++)
         {
-            for(int j=0; j<=15;j++)
+            for(int j=1; j<=15;j++)
             {
                 tempDecompressionImage[j][i]= tempDecoderImage[j][i]+tempDecompressionImage[j][i-1];
             }
         } 
     }
+    
+    public static void secondEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-tempOriginalImage[j-1][i];
+            }
+        } 
+    }
+        
+    public static void secondEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+tempDecompressionImage[j-1][i];
+            }
+        } 
+    }
+    
+    public static void thirdEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int j=1; j<=15;j++)
+        {
+            for(int i=1; i<=15;i++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-tempOriginalImage[j-1][i-1];
+            }
+        } 
+    }
+    
+     public static void thirdEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+tempDecompressionImage[j-1][i-1];
+            }
+        } 
+    }
+    
+    public static void forthEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int j=1; j<=15;j++)
+        {
+            for(int i=1; i<=15;i++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-tempOriginalImage[j][i-1]-tempOriginalImage[j-1][i]+tempOriginalImage[j-1][i-1];
+            }
+        } 
+    }
+    
+    public static void forthEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+tempDecompressionImage[j][i-1]+tempDecompressionImage[j-1][i]-tempDecompressionImage[j-1][i-1];
+            }
+        } 
+    } 
+     
+     
     
     public static void huffmanCodeEncoder(int[][]tempPredictorImage, String[][] tempHuffmanCode)
     {       
@@ -208,6 +276,31 @@ public class LosslessProject {
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         firstEquationDecoder(decompressionImage, decoderImage);
+        
+        //second equation
+        AandBEncoder(originalImage,predictorImage);
+        secondEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        secondEquationDecoder(decompressionImage, decoderImage);
+        
+        //third equation
+        AandBEncoder(originalImage,predictorImage);
+        thirdEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        thirdEquationDecoder(decompressionImage, decoderImage);
+        
+         //forth equation
+        AandBEncoder(originalImage,predictorImage);
+        forthEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        forthEquationDecoder(decompressionImage, decoderImage);
+        
         
 //        for(String[] tempNumber1:compressedImage)
 //        {
