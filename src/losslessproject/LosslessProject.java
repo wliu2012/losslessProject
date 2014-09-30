@@ -126,12 +126,60 @@ public class LosslessProject {
         {
             for(int i=1; i<=15;i++)
             {
-                tempPredictorImage[j][i]= tempOriginalImage[j][i]-(tempOriginalImage[j][i-1]/2+tempOriginalImage[j-1][i]/2);
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-(tempOriginalImage[j][i-1]+(tempOriginalImage[j-1][i]-tempOriginalImage[j-1][i-1])/2);
             }
         } 
     }
     
     public static void fifthEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+(tempDecompressionImage[j][i-1]+(tempDecompressionImage[j-1][i]-tempDecompressionImage[j-1][i-1])/2);
+            }
+        } 
+    } 
+    
+    public static void sixthEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int j=1; j<=15;j++)
+        {
+            for(int i=1; i<=15;i++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-(tempOriginalImage[j-1][i]+(tempOriginalImage[j][i-1]-tempOriginalImage[j-1][i-1])/2);
+            }
+        } 
+    }
+    
+    public static void sixthEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
+    {
+       for(int i=1; i<=15;i++)
+        {
+            for(int j=1; j<=15;j++)
+            {
+                tempDecompressionImage[j][i]= tempDecoderImage[j][i]+(tempDecompressionImage[j-1][i]+(tempDecompressionImage[j][i-1]-tempDecompressionImage[j-1][i-1])/2);
+            }
+        } 
+    } 
+    
+    
+    
+    
+    
+    public static void seventhEquationEncoder(int[][] tempOriginalImage, int[][] tempPredictorImage)
+    {
+       for(int j=1; j<=15;j++)
+        {
+            for(int i=1; i<=15;i++)
+            {
+                tempPredictorImage[j][i]= tempOriginalImage[j][i]-(tempOriginalImage[j][i-1]/2+tempOriginalImage[j-1][i]/2);
+            }
+        } 
+    }
+    
+    public static void seventhEquationDecoder(int[][] tempDecompressionImage, int[][] tempDecoderImage)
     {
        for(int i=1; i<=15;i++)
         {
@@ -320,27 +368,32 @@ public class LosslessProject {
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         forthEquationDecoder(decompressionImage, decoderImage);
-        
-         //fifth equation
+               
+        //fifth equation
         AandBEncoder(originalImage,predictorImage);
         fifthEquationEncoder(originalImage,predictorImage);
         huffmanCodeEncoder(predictorImage, compressedImage);
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         fifthEquationDecoder(decompressionImage, decoderImage);
+               
+        //sixth equation
+        AandBEncoder(originalImage,predictorImage);
+        sixthEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        sixthEquationDecoder(decompressionImage, decoderImage);
+        
+        //seventh equation
+        AandBEncoder(originalImage,predictorImage);
+        seventhEquationEncoder(originalImage,predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        seventhEquationDecoder(decompressionImage, decoderImage);
         
         
-//        for(String[] tempNumber1:compressedImage)
-//        {
-//            for(String tempNumber2:tempNumber1)
-//            {
-//                System.out.print(tempNumber2+" ");
-//            }
-//            System.out.println();
-//        }
-//        
-//        System.out.println();
-//         System.out.println();
         
         for(int[] tempNumber1:decompressionImage)
         {
