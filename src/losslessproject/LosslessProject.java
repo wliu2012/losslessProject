@@ -247,6 +247,24 @@ public class LosslessProject {
         }
     }
 
+    public static double RMSCalculator(int[][] tempOriginalImage, int[][] tempDecompressionImage) {
+        double error = 0;
+        double tempTotal = 0;
+
+        for (int m = 0; m <= 15; m++) {
+            for (int n = 0; n <= 15; n++) {
+                tempTotal = tempOriginalImage[m][n] - tempDecompressionImage[m][n];
+                tempTotal *= tempTotal;
+                error += tempTotal;
+            }
+        }
+        error = error * (1 / (16 * 16));
+        error = Math.sqrt(error);
+        return error;
+    }
+
+
+    
     /**
      * @param args the command line arguments
      */
@@ -275,7 +293,7 @@ public class LosslessProject {
         String[][] compressedImage = new String[16][16];
         int[][] decoderImage = new int[16][16];
         int[][] decompressionImage = new int[16][16];
-
+        double rms=0;
         //First equation
         AandBEncoder(originalImage, predictorImage);
         firstEquationEncoder(originalImage, predictorImage);
@@ -331,7 +349,9 @@ public class LosslessProject {
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         seventhEquationDecoder(decompressionImage, decoderImage);
-
+        
+        rms=RMSCalculator(originalImage, decompressionImage);
+         System.out.println(rms);
         for (int[] tempNumber1 : decompressionImage) {
             for (int tempNumber2 : tempNumber1) {
                 System.out.print(tempNumber2 + " ");
