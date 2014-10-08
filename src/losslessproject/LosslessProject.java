@@ -187,7 +187,7 @@ public class LosslessProject {
                         tempCode = "0101010101011";
                         break;
                     default:
-                        tempCode = Integer.toBinaryString(tempPredictorImage[0][0]);
+                        tempCode = "0" + Integer.toBinaryString(tempPredictorImage[0][0]);
                 }
                 tempHuffmanCode[i][j] = tempCode;
             }
@@ -263,8 +263,25 @@ public class LosslessProject {
         return error;
     }
 
+    public static double compressionRatio(String[][] tempHuffmanCode) {
+        double tempCr = 0;
+        double totalBit = 0;
+        for (int m = 0; m <= 15; m++) {
+            for (int n = 0; n <= 15; n++) {
+                totalBit += tempHuffmanCode[m][n].length() + 1;
+            }
+        }
+        tempCr = (16 * 16 * 8) / totalBit;
 
-    
+        return tempCr;
+    }
+
+    public static double bitPixel(double tempC) {
+        double tempPixel = 0;
+        tempPixel = 8 / tempC;
+        return tempPixel;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -293,7 +310,9 @@ public class LosslessProject {
         String[][] compressedImage = new String[16][16];
         int[][] decoderImage = new int[16][16];
         int[][] decompressionImage = new int[16][16];
-        double rms=0;
+        double rms = 0;
+        double cr = 0;
+        double bitPerPixel = 0;
         //First equation
         AandBEncoder(originalImage, predictorImage);
         firstEquationEncoder(originalImage, predictorImage);
@@ -302,6 +321,24 @@ public class LosslessProject {
         AandBDecoder(decompressionImage, decoderImage);
         firstEquationDecoder(decompressionImage, decoderImage);
 
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
         //second equation
         AandBEncoder(originalImage, predictorImage);
         secondEquationEncoder(originalImage, predictorImage);
@@ -309,6 +346,25 @@ public class LosslessProject {
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         secondEquationDecoder(decompressionImage, decoderImage);
+
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
 
         //third equation
         AandBEncoder(originalImage, predictorImage);
@@ -318,6 +374,25 @@ public class LosslessProject {
         AandBDecoder(decompressionImage, decoderImage);
         thirdEquationDecoder(decompressionImage, decoderImage);
 
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+
         //forth equation
         AandBEncoder(originalImage, predictorImage);
         forthEquationEncoder(originalImage, predictorImage);
@@ -325,6 +400,25 @@ public class LosslessProject {
         huffmanCodeDecoder(decoderImage, compressedImage);
         AandBDecoder(decompressionImage, decoderImage);
         forthEquationDecoder(decompressionImage, decoderImage);
+
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
 
         //fifth equation
         AandBEncoder(originalImage, predictorImage);
@@ -334,6 +428,25 @@ public class LosslessProject {
         AandBDecoder(decompressionImage, decoderImage);
         fifthEquationDecoder(decompressionImage, decoderImage);
 
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+
         //sixth equation
         AandBEncoder(originalImage, predictorImage);
         sixthEquationEncoder(originalImage, predictorImage);
@@ -342,17 +455,11 @@ public class LosslessProject {
         AandBDecoder(decompressionImage, decoderImage);
         sixthEquationDecoder(decompressionImage, decoderImage);
 
-        //seventh equation
-        AandBEncoder(originalImage, predictorImage);
-        seventhEquationEncoder(originalImage, predictorImage);
-        huffmanCodeEncoder(predictorImage, compressedImage);
-        huffmanCodeDecoder(decoderImage, compressedImage);
-        AandBDecoder(decompressionImage, decoderImage);
-        seventhEquationDecoder(decompressionImage, decoderImage);
-        
-        rms=RMSCalculator(originalImage, decompressionImage);
-         System.out.println(rms);
-        for (int[] tempNumber1 : decompressionImage) {
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+        for (int[] tempNumber1 : predictorImage) {
             for (int tempNumber2 : tempNumber1) {
                 System.out.print(tempNumber2 + " ");
             }
@@ -360,8 +467,38 @@ public class LosslessProject {
         }
         System.out.println();
         System.out.println();
-        for (int[] tempNumber1 : originalImage) {
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+
+        //seventh equation
+        AandBEncoder(originalImage, predictorImage);
+        seventhEquationEncoder(originalImage, predictorImage);
+        huffmanCodeEncoder(predictorImage, compressedImage);
+        huffmanCodeDecoder(decoderImage, compressedImage);
+        AandBDecoder(decompressionImage, decoderImage);
+        seventhEquationDecoder(decompressionImage, decoderImage);
+
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println(rms);
+        cr = compressionRatio(compressedImage);
+        System.out.println(cr);
+        bitPerPixel = bitPixel(cr);
+        System.out.println(bitPerPixel);
+
+        for (int[] tempNumber1 : predictorImage) {
             for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        for (String[] tempNumber1 : compressedImage) {
+            for (String tempNumber2 : tempNumber1) {
                 System.out.print(tempNumber2 + " ");
             }
             System.out.println();
