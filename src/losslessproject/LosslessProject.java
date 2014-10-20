@@ -6,7 +6,6 @@
 package losslessproject;
 
 import java.lang.System;
-import java.util.ArrayList;
 
 /**
  *
@@ -284,6 +283,28 @@ public class LosslessProject {
         return tempPixel;
     }
 
+    public static void printIntArray(int[][] tempArray)
+    {
+        for (int[] tempNumber1 : tempArray) {
+            for (int tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+    public static void printStringArray(String[][] tempArray)
+    {
+        for (String[] tempNumber1 : tempArray) {
+            for (String tempNumber2 : tempNumber1) {
+                System.out.print(tempNumber2 + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -308,123 +329,184 @@ public class LosslessProject {
             {102, 105, 105, 105, 106, 104, 106, 107, 104, 103, 102, 100, 101, 104, 102, 104}
         };
         
+        //I reused predictorImage, compressedImage, decoderImage, 
+        //and DecompressionImage for all seven cases
+        int[][] predictorImage = new int[16][16];//Image after encoder
+        String[][] compressedImage = new String[16][16];//Image after huffman encoder
+        int[][] decoderImage = new int[16][16];//Image after huffman decoder
+        int[][] decompressionImage = new int[16][16];//Image after decoder
         
-        int[][] predictorImage = new int[16][16];
-        String[][] compressedImage = new String[16][16];
-        int[][] decoderImage = new int[16][16];
-        int[][] decompressionImage = new int[16][16];
         double rms = 0;
         double cr = 0;
         double bitPerPixel = 0;
+        
         //First equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
-        firstEquationEncoder(originalImage, predictorImage);
-        huffmanCodeEncoder(predictorImage, compressedImage);
+        firstEquationEncoder(originalImage, predictorImage);      
+        printIntArray(predictorImage);
+        
+        huffmanCodeEncoder(predictorImage, compressedImage);       
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         firstEquationDecoder(decompressionImage, decoderImage);
-
+        printIntArray(decompressionImage);
+        
         rms = RMSCalculator(originalImage, decompressionImage);
-        System.out.println(rms);
+        System.out.println("RMS: "+rms);
+        
         cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
-        bitPerPixel = bitPixel(cr);
         
+        bitPerPixel = bitPixel(cr);        
         System.out.println("bit/pixel: "+bitPerPixel);
-        for (int[] tempNumber1 : predictorImage) {
-            for (int tempNumber2 : tempNumber1) {
-                System.out.print(tempNumber2 + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println();
-        for (int[] tempNumber1 : decoderImage) {
-            for (int tempNumber2 : tempNumber1) {
-                System.out.print(tempNumber2 + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        for (String[] tempNumber1 : compressedImage) {
-            for (String tempNumber2 : tempNumber1) {
-                System.out.print(tempNumber2+" ");
-            }
-           System.out.println();
-        }
+        
+        
+        
         //second equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         secondEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         secondEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
        
-         cr = compressionRatio(compressedImage);
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
+        cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
         System.out.println("bit/pixel: "+bitPerPixel);
 
         //third equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         thirdEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         thirdEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
 
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
          cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
         System.out.println("bit/pixel: "+bitPerPixel);
         
         //forth equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         forthEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         forthEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
 
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
          cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
         System.out.println("bit/pixel: "+bitPerPixel);
         
         //fifth equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         fifthEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         fifthEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
 
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
          cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
         System.out.println("bit/pixel: "+bitPerPixel);
         
         //sixth equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         sixthEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         sixthEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
 
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
          cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
         System.out.println("bit/pixel: "+bitPerPixel);
         
         //seventh equation
+        printIntArray(originalImage);
+        
         AandBEncoder(originalImage, predictorImage);
         seventhEquationEncoder(originalImage, predictorImage);
+        printIntArray(predictorImage);
+        
         huffmanCodeEncoder(predictorImage, compressedImage);
+        printStringArray(compressedImage);
+        
         huffmanCodeDecoder(decoderImage, compressedImage);
+        printIntArray(decoderImage);
+        
         AandBDecoder(decompressionImage, decoderImage);
         seventhEquationDecoder(decompressionImage, decoderImage);
+        printIntArray(decompressionImage);
      
+        rms = RMSCalculator(originalImage, decompressionImage);
+        System.out.println("RMS: "+rms);
          cr = compressionRatio(compressedImage);
         System.out.println("Cr: "+cr);
         bitPerPixel = bitPixel(cr);
