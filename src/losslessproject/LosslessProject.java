@@ -42,7 +42,7 @@ public class LosslessProject {
                         tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j - 1][i] + (tempOriginalImage[j][i - 1] - tempOriginalImage[j - 1][i - 1]) / 2);
                         break;
                     case 7:
-                        tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j][i - 1] / 2 + tempOriginalImage[j - 1][i] / 2);
+                        tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j][i - 1] + tempOriginalImage[j - 1][i] )/ 2;
                         break;
                     default:
                         break;
@@ -80,7 +80,7 @@ public class LosslessProject {
                         tempDecompressionImage[j][i] = tempDecoderImage[j][i] + (tempDecompressionImage[j - 1][i] + (tempDecompressionImage[j][i - 1] - tempDecompressionImage[j - 1][i - 1]) / 2);
                         break;
                     case 7:
-                        tempDecompressionImage[j][i] = tempDecoderImage[j][i] + (tempDecompressionImage[j][i - 1] / 2 + tempDecompressionImage[j - 1][i] / 2);
+                        tempDecompressionImage[j][i] = tempDecoderImage[j][i] + (tempDecompressionImage[j][i - 1] + tempDecompressionImage[j - 1][i]) / 2;
                         break;
                     default:
                         break;
