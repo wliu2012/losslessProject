@@ -42,7 +42,7 @@ public class LosslessProject {
                         tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j - 1][i] + (tempOriginalImage[j][i - 1] - tempOriginalImage[j - 1][i - 1]) / 2);
                         break;
                     case 7:
-                        tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j][i - 1] + tempOriginalImage[j - 1][i] )/ 2;
+                        tempPredictorImage[j][i] = tempOriginalImage[j][i] - (tempOriginalImage[j][i - 1] + tempOriginalImage[j - 1][i]) / 2;
                         break;
                     default:
                         break;
@@ -287,36 +287,39 @@ public class LosslessProject {
         double bitPerPixel = 0;
 
         for (int i = 1; i <= 7; i++) {
-            
-            printIntArray(originalImage);
-            
-            encoder(originalImage, predictorImage, i);
-            
-            printIntArray(predictorImage);
-            
-            huffmanCodeEncoder(predictorImage, compressedImage);
-            
-            printStringArray(compressedImage);
-            
-            huffmanCodeDecoder(decoderImage, compressedImage);
-            
-            printIntArray(decoderImage);
-            
-            decoder(decompressionImage, decoderImage, i);
-            
-            printIntArray(decompressionImage);
+            System.out.println("Case " + i + ":");
 
-            rms = RMSCalculator(originalImage, decompressionImage);
-            System.out.println("RMS: " + rms);
+            printIntArray(originalImage);
+
+            encoder(originalImage, predictorImage, i);
+
+            printIntArray(predictorImage);
+
+            huffmanCodeEncoder(predictorImage, compressedImage);
+
+            printStringArray(compressedImage);
+
+            huffmanCodeDecoder(decoderImage, compressedImage);
+
+            printIntArray(decoderImage);
+
+            decoder(decompressionImage, decoderImage, i);
+
+            printIntArray(decompressionImage);
 
             cr = compressionRatio(compressedImage);
             System.out.println("Cr: " + cr);
+            
+            rms = RMSCalculator(originalImage, decompressionImage);
+            System.out.println("RMS: " + rms);
 
             bitPerPixel = bitPixel(cr);
             System.out.println("bit/pixel: " + bitPerPixel);
+            
+            System.out.println();
             System.out.println();
         }
-        
+
     }
 
 }
