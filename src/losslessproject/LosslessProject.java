@@ -91,7 +91,6 @@ public class LosslessProject {
 
     public static void huffmanCodeEncoder(int[][] tempPredictorImage, String[][] tempHuffmanCode) {
         String tempCode = "";
-
         for (int i = 0; i <= 15; i++) {
             for (int j = 0; j <= 15; j++) {
                 switch (tempPredictorImage[i][j]) {
@@ -144,7 +143,6 @@ public class LosslessProject {
 
     public static void huffmanCodeDecoder(int[][] tempDecoderImage, String[][] tempHuffmanCode) {
         int tempCode = 0;
-
         for (int i = 0; i <= 15; i++) {
             for (int j = 0; j <= 15; j++) {
                 switch (tempHuffmanCode[i][j]) {
@@ -219,9 +217,7 @@ public class LosslessProject {
                 totalBit += tempHuffmanCode[m][n].length();
             }
         }
-
         tempCr = (16 * 16 * 8) / totalBit;
-
         return tempCr;
     }
 
@@ -287,37 +283,51 @@ public class LosslessProject {
         double bitPerPixel = 0;
 
         for (int i = 1; i <= 7; i++) {
-            System.out.println("Case " + i + ":");
+            System.out.println("\nCase " + i + ":");
 
+            //print original image
             printIntArray(originalImage);
 
+            //encode the original method by different methods or cases
             encoder(originalImage, predictorImage, i);
 
+            //print the encode image
             printIntArray(predictorImage);
 
+            //encode by the huffman table 
             huffmanCodeEncoder(predictorImage, compressedImage);
 
+            //print the huffman encode image
             printStringArray(compressedImage);
 
+            //decode by the huffman table
             huffmanCodeDecoder(decoderImage, compressedImage);
 
+            //print the huffman decode image
             printIntArray(decoderImage);
 
+            //decode the huffman image by its specific method
             decoder(decompressionImage, decoderImage, i);
 
+            //print the final decode image
             printIntArray(decompressionImage);
 
+            //calculate the compressed ratio
             cr = compressionRatio(compressedImage);
+            //print the compressed ratio
             System.out.println("Cr: " + cr);
             
+            //calculate the rms
             rms = RMSCalculator(originalImage, decompressionImage);
+            //print rms
             System.out.println("RMS: " + rms);
 
+            //calculate the bit per pixel
             bitPerPixel = bitPixel(cr);
+            //print bit per pixel
             System.out.println("bit/pixel: " + bitPerPixel);
             
-            System.out.println();
-            System.out.println();
+            System.out.println();          
         }
 
     }
